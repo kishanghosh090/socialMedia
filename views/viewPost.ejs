@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link
+      href="https://cdn.jsdelivr.net/npm/flowbite@2.5.2/dist/flowbite.min.css"
+      rel="stylesheet"
+    />
+    <link
+      href="https://cdn.jsdelivr.net/npm/remixicon@4.5.0/fonts/remixicon.css"
+      rel="stylesheet"
+    />
+    <script src="https://cdn.tailwindcss.com"></script>
+  </head>
+  <body
+    class="bg-gray-50 dark:bg-gray-900 p-5 flex justify-center items-center"
+  >
+    <a
+      href="/api/v1/users/home"
+      class="backbtn absolute top-5 left-5 ri-arrow-left-fill cursor-pointer z-10 absolute top-5 left-5 text-3xl dark:text-white text-black text-3xl"
+    >
+      <i class="text-3xl"> </i>
+    </a>
+    <div class="postCards w-full mt-[5rem] max-w-sm p-5 flex flex-col">
+      <%if (posts.length > 0) { %> <% for (let i = 0; i < posts.length; i++) {
+      %>
+      <div class="card mb-3">
+        <div
+          class="max-w-sm bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700"
+        >
+          <div
+            class="userDetails p-4 flex justify-start items-center gap-3"
+            onclick="viewUserDetails(`<%= users[i]._id %>`)"
+          >
+            <img
+              src="<%= users[i].avatar %>"
+              alt=""
+              class="w-10 h-10 rounded-full cursor-pointer object-cover object-center flex items-center justify-center"
+            />
+            <h1
+              class="text-1xl font-bold text-gray-700 dark:text-gray-400 cursor-pointer flex items-center justify-center"
+            >
+              <%= users[i].username.toUpperCase() %>
+            </h1>
+          </div>
+          <a href="#">
+            <img class="rounded-t-lg" src="<%= posts[i].postImage %>" alt="" />
+          </a>
+          <div class="p-5">
+            <p class="mb-3 font-normal text-gray-700 dark:text-gray-400">
+              <%= posts[i].description %>
+            </p>
+          </div>
+        </div>
+      </div>
+      <% } %> <% } else { %>
+      <h1 class="text-center text-2xl text-gray-500 dark:text-gray-400">
+        no post
+      </h1>
+      <% } %>
+    </div>
+  </body>
+  <script src="https://cdn.jsdelivr.net/npm/flowbite@2.5.2/dist/flowbite.min.js"></script>
+  <script>
+    function viewUserDetails(id) {
+      window.location.href = `/api/v1/users/viewAnotherUser/${id}`;
+    }
+  </script>
+</html>

@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link
+      href="https://cdn.jsdelivr.net/npm/flowbite@2.5.2/dist/flowbite.min.css"
+      rel="stylesheet"
+    />
+    <link
+      href="https://cdn.jsdelivr.net/npm/remixicon@4.5.0/fonts/remixicon.css"
+      rel="stylesheet"
+    />
+
+    <script src="https://cdn.tailwindcss.com"></script>
+  </head>
+  <body
+    class="bg-gray-50 dark:bg-gray-900 p-5 flex justify-center items-center h-screen"
+  >
+    <a
+      href="/api/v1/users/home"
+      class="ri-arrow-left-fill cursor-pointer z-10 absolute top-5 left-5 text-3xl dark:text-white text-black"
+      ><i class="text-3xl"></i
+    ></a>
+
+    <form
+      action="/api/v1/post/createFeed"
+      method="POST"
+      enctype="multipart/form-data"
+      class="space-y-6 flex flex-col items-evenly w-full max-w-md mx-auto p-5 bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700"
+    >
+      <!-- Display Profile Image -->
+      <div class="flex flex-col items-center w-full">
+        <div class="w[80%] overflow-hidden border border-gray-300">
+          <img
+            src=""
+            id="profile-preview"
+            alt="Your Post"
+            class="h-[29vh] w-[80vw] object-cover object-center flex items-center justify-center text-white bg-cover"
+          />
+        </div>
+      </div>
+
+      <!-- File Input -->
+      <div class="flex justify-end">
+        <label class="cursor-pointer">
+          <input
+            type="file"
+            name="postImage"
+            accept="image/*"
+            id="profile-pic-input"
+            class="hidden"
+            onchange="updatePreview(event)"
+          />
+          <span
+            class="bg-blue-500 text-white px-4 py-2 rounded-lg hover:bg-blue-600"
+          >
+            Choose photo
+          </span>
+        </label>
+      </div>
+
+      <!-- captions and description -->
+      <div class="flex flex-col gap-2">
+        <textarea
+          name="description"
+          class="w-full h-24 p-2 border border-gray-300 rounded-lg"
+          placeholder="description"
+        ></textarea>
+      </div>
+      <!-- Submit Button -->
+      <button
+        type="submit"
+        class="w-full bg-blue-500 text-white py-2 rounded-lg hover:bg-blue-600 transition"
+      >
+        Upload
+      </button>
+    </form>
+  </body>
+  <script src="https://cdn.jsdelivr.net/npm/flowbite@2.5.2/dist/flowbite.min.js"></script>
+
+  <script>
+    // JavaScript to update the profile image preview
+    function updatePreview(event) {
+      const file = event.target.files[0];
+      if (file) {
+        const reader = new FileReader();
+        reader.onload = function (e) {
+          document.getElementById("profile-preview").src = e.target.result;
+        };
+        reader.readAsDataURL(file);
+      }
+    }
+  </script>
+</html>

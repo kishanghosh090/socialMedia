@@ -1,0 +1,398 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link
+      href="https://cdn.jsdelivr.net/npm/remixicon@4.5.0/fonts/remixicon.css"
+      rel="stylesheet"
+    />
+    <link
+      href="https://cdn.jsdelivr.net/npm/flowbite@2.5.2/dist/flowbite.min.css"
+      rel="stylesheet"
+    />
+    <style>
+      @media (max-width: 767px) {
+        .userData {
+          display: none;
+        }
+      }
+      .searchBar-hide {
+        display: none;
+      }
+    </style>
+    <script src="https://cdn.tailwindcss.com"></script>
+  </head>
+  <body
+    oncontextmenu="return false"
+    class="bg-gray-50 dark:bg-gray-900 p-5 relative"
+  >
+    <div class="main lex justify-center items-center flex-col gap-5 relative">
+      <!--  top navbar -->
+
+      <nav
+        class="fixed top-0 left-0 right-0 z-100 border-gray-200 dark:bg-gray-900"
+      >
+        <div
+          class="max-w-screen-xl flex flex-wrap items-center justify-between mx-auto p-4"
+        >
+          <a
+            href="https://flowbite.com/"
+            class="flex items-center space-x-3 rtl:space-x-reverse"
+          >
+            <img
+              src="https://flowbite.com/docs/images/logo.svg"
+              class="h-8"
+              alt="Flowbite Logo"
+            />
+            <span
+              class="self-center text-2xl font-semibold whitespace-nowrap dark:text-white"
+              >Flowbite</span
+            >
+          </a>
+          <button
+            data-collapse-toggle="navbar-default"
+            type="button"
+            class="inline-flex items-center p-2 w-10 h-10 justify-center text-sm text-gray-500 rounded-lg md:hidden hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-200 dark:text-gray-400 dark:hover:bg-gray-700 dark:focus:ring-gray-600"
+            aria-controls="navbar-default"
+            aria-expanded="false"
+          >
+            <span class="sr-only">Open main menu</span>
+            <svg
+              class="w-5 h-5"
+              aria-hidden="true"
+              xmlns="http://www.w3.org/2000/svg"
+              fill="none"
+              viewBox="0 0 17 14"
+            >
+              <path
+                stroke="currentColor"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="2"
+                d="M1 1h15M1 7h15M1 13h15"
+              />
+            </svg>
+          </button>
+          <div
+            class="hidden w-full md:block md:w-auto z-100"
+            id="navbar-default"
+          >
+            <ul
+              class="font-medium flex flex-col gap-2 p-4 md:p-0 mt-4 border border-gray-100 rounded-lg bg-gray-50 md:flex-row md:space-x-8 rtl:space-x-reverse md:mt-0 md:border-0 md:bg-white dark:bg-gray-800 md:dark:bg-gray-900 dark:border-gray-700 md:translate-y-0 translate-y-20"
+            >
+              <div
+                class="userData flex gap-3 items-center justify-center md:hidden"
+              >
+                <img
+                  class="w-24 h-24 mb-3 rounded-full shadow-lg"
+                  src="<%= user.avatar %>"
+                  alt="Bonnie image"
+                />
+                <h5
+                  class="mb-1 text-xl font-medium text-gray-900 dark:text-white"
+                >
+                  <%= user.username.toUpperCase() %>
+                </h5>
+              </div>
+              <li>
+                <a
+                  href="#"
+                  class="block py-2 px-3 text-white bg-blue-700 rounded md:bg-transparent md:text-blue-700 md:p-0 dark:text-white md:dark:text-blue-500"
+                  aria-current="page"
+                >
+                  <i class="ri-home-4-fill mr-2"></i>Home</a
+                >
+              </li>
+              <li>
+                <a
+                  href="#"
+                  class="block py-2 px-3 text-gray-900 rounded hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-blue-700 md:p-0 dark:text-white md:dark:hover:text-blue-500 dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent"
+                >
+                  <i class="ri-settings-5-line mr-2"></i>settings</a
+                >
+              </li>
+              <li>
+                <form
+                  action="/api/v1/users/logout"
+                  method="post"
+                  class="block py-2 px-3 text-gray-900 rounded hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-blue-700 md:p-0 dark:text-white md:dark:hover:text-blue-500 dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent"
+                >
+                  <button type="submit" class="text-white">
+                    <i class="ri-logout-circle-r-line mr-2"></i>Logout
+                  </button>
+                </form>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </nav>
+      <!-- search sction -->
+      <div
+        class="appendUser max-w-md mx-auto top-50 absolute top-7 left-1/2 transform -translate-x-1/2 mt-[-5] w-full searchBar searchBar-hide shadow-md rounded-md p-4 bg-white dark:bg-gray-700 h-full z-50 translate-y-0"
+      >
+        <form id="myForm">
+          <div class="relative flex items-center w-full mb-4 justify-between">
+            <input
+              type="search"
+              id="default-search"
+              class="block w-full p-4 ps-10 text-sm text-gray-900 border border-gray-300 rounded-lg bg-gray-50 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+              placeholder="search user by email or number"
+              name="emailOrNumber"
+              required
+            />
+            <button
+              type="submit"
+              class="text-white absolute end-2.5 bottom-2.5 bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-4 py-2 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
+            >
+              Search
+            </button>
+          </div>
+        </form>
+        <div class="searchResult"></div>
+      </div>
+      <!-- // bottom navbar -->
+
+      <div
+        class="nav mt-20 fixed top-0 left-0 right-0 z-10 bg-gray-800 dark:border-gray-600 dark:bg-gray-800 dark:text-white p-2 text-white text-center text-sm mx-4 rounded-full px-4"
+      >
+        <ul class="flex justify-between items-center w-full">
+          <li
+            class="rounded-full bg-blue-700 h-10 w-10 flex items-center justify-center"
+          >
+            <a href="/api/v1/users/home" class="active text-white text-2xl"
+              ><i class="ri-user-3-fill"></i
+            ></a>
+          </li>
+          <li class="active text-white text-2xl cursor-pointer search-btn">
+            <i class="ri-search-eye-line"></i>
+          </li>
+          <li class="relative group">
+            <a href="/api/v1/post/createFeed" class="active text-white text-3xl"
+              ><i class="ri-add-circle-fill"></i
+            ></a>
+          </li>
+          <li>
+            <a href="/api/v1/post/viewPost" class="active text-white text-2xl"
+              ><i class="ri-rss-fill"></i
+            ></a>
+          </li>
+        </ul>
+      </div>
+      <!-- // main content -->
+      <div
+        class="w-full mt-[10rem] max-w-sm bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700"
+      >
+        <div class="flex justify-end px-4 pt-4">
+          <button
+            id="dropdownButton"
+            data-dropdown-toggle="dropdown"
+            class="inline-block text-gray-500 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-700 focus:ring-4 focus:outline-none focus:ring-gray-200 dark:focus:ring-gray-700 rounded-lg text-sm p-1.5"
+            type="button"
+          >
+            <span class="sr-only">Open dropdown</span>
+            <svg
+              class="w-5 h-5"
+              aria-hidden="true"
+              xmlns="http://www.w3.org/2000/svg"
+              fill="currentColor"
+              viewBox="0 0 16 3"
+            >
+              <path
+                d="M2 0a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3Zm6.041 0a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3ZM14 0a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3Z"
+              />
+            </svg>
+          </button>
+          <!-- Dropdown menu -->
+          <div
+            id="dropdown"
+            class="z-10 hidden text-base list-none bg-white divide-y divide-gray-100 rounded-lg shadow w-44 dark:bg-gray-700 mr-2"
+          >
+            <ul class="py-2" aria-labelledby="dropdownButton">
+              <li>
+                <a
+                  href="/api/v1/users/editProfile"
+                  class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white"
+                  >Edit Profile <i class="ri-pencil-line ml-2"></i
+                ></a>
+              </li>
+              <li>
+                <a
+                  href="#"
+                  class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white"
+                  >Export Data</a
+                >
+              </li>
+              <li class="py-1 border-t border-gray-200 dark:border-gray-600">
+                <form
+                  action="/api/v1/users/logout"
+                  method="post"
+                  class="w-full text-center"
+                >
+                  <button
+                    type="submit"
+                    class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white w-full text-center"
+                  >
+                    Logout
+                    <i
+                      class="ri-logout-circle-r-line ml-2 text-red-500 text-bold"
+                    ></i>
+                  </button>
+                </form>
+              </li>
+            </ul>
+          </div>
+        </div>
+        <div class="flex flex-col items-center pb-10">
+          <img
+            class="w-24 h-24 mb-3 rounded-full shadow-lg"
+            src="<%= user.avatar %>"
+            alt="Bonnie image"
+          />
+          <h5 class="mb-1 text-xl font-medium text-gray-900 dark:text-white">
+            <%= user.username.toUpperCase() %>
+          </h5>
+          <span class="text-sm text-gray-500 dark:text-gray-400"
+            ><%= user.email %></span
+          >
+          <div class="flex mt-4 md:mt-6">
+            <a
+              href="#"
+              class="inline-flex items-center px-4 py-2 text-sm font-medium text-center text-white bg-blue-700 rounded-lg hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
+              >Add friend</a
+            >
+            <a
+              href="#"
+              class="py-2 px-4 ms-2 text-sm font-medium text-gray-900 focus:outline-none bg-white rounded-lg border border-gray-200 hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:ring-4 focus:ring-gray-100 dark:focus:ring-gray-700 dark:bg-gray-800 dark:text-gray-400 dark:border-gray-600 dark:hover:text-white dark:hover:bg-gray-700"
+              >Message</a
+            >
+          </div>
+        </div>
+      </div>
+      <hr class="my-2 dark:border-gray-600 p-2 w-full" />
+      <!-- your activity -->
+      <div class="activity">
+        <h1
+          class="text-3xl mb-3 font-bold text-left text-gray-900 dark:text-white"
+        >
+          Your Activity
+        </h1>
+        <div class="postCards">
+          <%if (post.length > 0) { %> <% for (let i = 0; i < post.length; i++) {
+          %>
+          <div class="card mb-3">
+            <div
+              class="max-w-sm bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700"
+            >
+              <a href="#">
+                <img
+                  class="rounded-t-lg"
+                  src="<%= post[i].postImage %>"
+                  alt=""
+                />
+              </a>
+              <div class="p-5">
+                <p class="mb-3 font-normal text-gray-700 dark:text-gray-400">
+                  <%= post[i].description %>
+                </p>
+              </div>
+            </div>
+          </div>
+          <% } %> <% } else { %>
+          <h1 class="text-center text-2xl text-gray-500 dark:text-gray-400">
+            no post
+          </h1>
+          <% } %>
+        </div>
+      </div>
+    </div>
+  </body>
+  <script src="https://cdn.jsdelivr.net/npm/flowbite@2.5.2/dist/flowbite.min.js"></script>
+  <script>
+    document.querySelector(".search-btn").addEventListener("click", () => {
+      document.querySelector(".searchBar").classList.toggle("searchBar-hide");
+    });
+  </script>
+  <script>
+    let isTrue = true;
+
+    function viewUserDetails() {
+      return function searchResult(userId) {
+        window.location.href = `/api/v1/users/viewAnotherUser/${userId}`;
+      };
+    }
+    function searchResult(data) {
+      if (isTrue) {
+        const div = document.createElement("div");
+        document
+          .querySelector(".searchResult")
+          .setAttribute(
+            "onclick",
+            `(${viewUserDetails()})("${data.user._id}")`
+          );
+        document
+          .querySelector(".searchResult")
+          .classList.add(
+            "cursor-pointer",
+            "searchResult",
+            "flex",
+            "justify-between",
+            "items-center",
+            "w-full",
+            "max-w-sm",
+            "bg-white",
+            "border",
+            "border-gray-200",
+            "rounded-lg",
+            "shadow",
+            "dark:bg-gray-800",
+            "dark:border-gray-700",
+            "p-7"
+          );
+        div.innerHTML = `<h1 class="text-center text-2xl text-gray-500 dark:text-gray-400">${data.user.username}</h1>`;
+        document.querySelector(".searchResult").appendChild(div);
+        const img = document.createElement("img");
+        img.setAttribute("src", data.user.avatar);
+        img.classList.add("w-14", "h-14", "rounded-full", "shadow-lg");
+        document.querySelector(".searchResult").appendChild(img);
+        isTrue = false;
+      } else {
+        return;
+      }
+    }
+    document
+      .getElementById("myForm")
+      .addEventListener("submit", async (event) => {
+        event.preventDefault(); // Prevent the form from refreshing the page
+
+        // Gather form data
+        const formData = new FormData(event.target);
+        const data = Object.fromEntries(formData.entries());
+
+        try {
+          const response = await fetch(
+            "http://localhost:5002/api/v1/users/searchUser",
+            {
+              method: "POST",
+              headers: {
+                "Content-Type": "application/json",
+              },
+              body: JSON.stringify(data), // Convert data to JSON
+            }
+          );
+          const myData = await response.json();
+
+          if (response.ok) {
+            if (myData.message === "user does not exist") {
+              alert(myData.message);
+              return;
+            } else {
+              await searchResult(myData);
+            }
+          }
+        } catch (error) {
+          console.error("Error:", error);
+        }
+      });
+  </script>
+</html>
