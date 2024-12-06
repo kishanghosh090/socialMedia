@@ -106,7 +106,7 @@
                     <p>Didn't recieve code?</p>
                     <a
                       class="flex flex-row items-center text-blue-600"
-                      href="http://localhost:5002/api/v1/users/forgotpassword"
+                      href="/api/v1/users/forgotpassword"
                       target="_blank"
                       rel="noopener noreferrer"
                       >Resend</a
@@ -147,18 +147,15 @@
           if (response.ok) {
             if (myData.message === "user does not exist") {
               alert(myData.message);
-              window.location.href =
-                "http://localhost:5002/api/v1/users/register";
+              window.location.href = "/api/v1/users/register";
               return;
             } else if (myData.message === "incorrect otp") {
               alert(myData.message);
-              window.location.href =
-                "http://localhost:5002/api/v1/users/forgotpassword";
+              window.location.href = "/api/v1/users/forgotpassword";
               return;
             } else {
               alert(myData.user.username.toUpperCase());
-              window.location.href =
-                "http://localhost:5002/api/v1/users/newPassword";
+              window.location.href = "/api/v1/users/newPassword";
               return;
             }
           } else {
